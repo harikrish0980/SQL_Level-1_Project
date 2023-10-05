@@ -1,3 +1,22 @@
+------------------SAILORS DATABASE-----------------------------
+/*Boats: BID | BNAME | COLOR
+Sailors: SID | SNAME | RATING | AGE
+Reserves: SID | BID | DAY
+
+Table_1                                 Table2                              Table_3          
+SID SNAME   RATING         AGE          BID     BNAME       COLOR           SID BID     DAY
+22	Dustin	7           45          101	Interlake   blue            22	101	10-OCT-98
+29	Brutus	1           33          102	interlake   red             22	102	10-OCT-98
+31	Lubber	8	    55.5        103	Clipper	    green           22	103	08-OCT-98
+32	Andy	8	    25.5        104	Marine	    red             22	104	07-OCT-98
+58	Rusty	10	    35          105	SeaBird	    blue            31	102	10-NOV-98
+64	Horatio	9	    40                                              31	103	06-NOV-98
+71	Zorba	10	    16                                              31	104	12-NOV-98
+74	Horatio	9	    40                                              64	101	05-SEP-98
+85	Art     3	    25.5                                            64	102	08-SEP-98
+95	Bob     3	    63.5                                            74	103	08-SEP-98
+                                                                            22	105	09-NOV-98
+*/
 --Create a table Boats
 
 create table Boats(BID number(5), BNAME varchar2(10), COLOR varchar2(10));
@@ -33,8 +52,8 @@ Desc boats
 Desc Sailors
 Desc Reserves
 
---
---1. Find details of sailors whose name contains ‘s’ as a 3rd character.
+--SQL Queries
+--1. Find details of sailors whose name contains â€˜sâ€™ as a 3rd character.
 
 select * from sailors 
 where sname like '__s%';
@@ -55,7 +74,7 @@ select DISTINCT(s.sid), s.sname, b.color, r.bid
 from sailors s, boats b, reserves r 
 where s.sid=r.sid and r.bid=b.bid and S.SID='64';
 
---4. Find details of sailors whose name contains the letter ‘o’ only once (do not use wildcards).
+--4. Find details of sailors whose name contains the letter â€˜oâ€™ only once (do not use wildcards).
 
 SELECT * FROM sailors WHERE INSTR(UPPER(TRIM(SNAME)),'O')!=0 AND
 INSTR(UPPER(TRIM(SNAME)),'O',1,3)=0;
@@ -135,7 +154,7 @@ FROM boats b
 LEFT JOIN reserves r ON b.bid = r.bid
 GROUP BY b.bid;
 
---13. Find sailor details whose name contains ‘E’ as a 2nd character from end of the string.
+--13. Find sailor details whose name contains â€˜Eâ€™ as a 2nd character from end of the string.
 
 SELECT * FROM sailors
 where sname like'%e_';
@@ -145,7 +164,7 @@ SELECT *
 FROM sailors
 WHERE UPPER(SUBSTR(TRIM(sname), -2, 1)) = 'E';
 
---14. Display sailor and boat details for those reservations where a sailor reserved  either a red boat or a boat named ‘Interlake’
+--14. Display sailor and boat details for those reservations where a sailor reserved  either a red boat or a boat named â€˜Interlakeâ€™
 
 SELECT distinct s.*, b.*
 FROM sailors s
@@ -173,7 +192,7 @@ GROUP BY rating;
 SELECT COUNT(DISTINCT sname) AS number_of_different_names
 FROM sailors;
 
---18 Find the names and ages of Sailors whose name begins and ends with ‘B’ and has at least 3 characters (use wildcards, ignore the case).
+--18 Find the names and ages of Sailors whose name begins and ends with â€˜Bâ€™ and has at least 3 characters (use wildcards, ignore the case).
 SELECT sname, age
 FROM sailors
 WHERE UPPER(sname) LIKE 'B%B' AND LENGTH(sname) >= 3;
@@ -195,7 +214,7 @@ order by r.sid
 )
 where rn=&n;
 
---21. Display details of sailors who reserved the boat ‘Clipper’.
+--21. Display details of sailors who reserved the boat â€˜Clipperâ€™.
 
 select s.*, b.bname from
 sailors s, reserves r, boats b
